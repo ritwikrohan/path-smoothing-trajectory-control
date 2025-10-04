@@ -50,6 +50,13 @@ git clone https://github.com/ritwikrohan/path-smoothing-trajectory-control.git
 
 ### Install Dependencies
 
+**Note** If this is your first time using rosdep, initialize it first:
+```bash
+sudo rosdep init
+rosdep update
+```
+otherwise,  skip the above step
+
 ```bash
 cd ~/ros2_ws
 rosdep install --from-paths src --ignore-src -r -y
