@@ -14,7 +14,6 @@ find_package(rclcpp REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(bot_msgs REQUIRED)
 
-include_directories(include)
 
 add_executable(trajectory_generator_node src/trajectory_generator.cpp)
 ament_target_dependencies(trajectory_generator_node rclcpp nav_msgs bot_msgs)

@@ -11,18 +11,11 @@ find_package(sensor_msgs REQUIRED)
 find_package(nav_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(tf2 REQUIRED)
-find_package(Eigen3 REQUIRED)
 
-include_directories(include)
-include_directories(${EIGEN3_INCLUDE_DIR})
 
 add_executable(twist_relay src/twist_relay.cpp)
 ament_target_dependencies(twist_relay rclcpp geometry_msgs)
 
-install(
-  DIRECTORY include
-  DESTINATION include
-)
 
 install(TARGETS
   twist_relay
