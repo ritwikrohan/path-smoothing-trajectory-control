@@ -45,7 +45,7 @@ Instead, I implemented a standalone solution that demonstrates the same concepts
 ```bash
 mkdir -p ~/ros2_ws/src
 cd ~/ros2_ws/src
-git clone <your-repo-name>
+git clone https://github.com/ritwikrohan/path-smoothing-trajectory-control.git
 ```
 
 ### Install Dependencies
