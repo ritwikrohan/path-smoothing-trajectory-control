@@ -7,15 +7,15 @@ from ament_index_python.packages import get_package_share_directory
 
 
 def generate_launch_description():
-    pkg_name = "bot_bringup"  # <-- put your bringup package name here
+    pkg_name = "bot_bringup" 
 
-    # path to YAML file
     params_file = os.path.join(
         get_package_share_directory(pkg_name),
         "params",
         "assignment.yaml"
     )
 
+    # Gazebo world + robot description
     gazebo = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
             get_package_share_directory("bot_description"),
@@ -24,6 +24,7 @@ def generate_launch_description():
         ))
     )
 
+    # Controllers (diff drive, joint state, etc.)
     controller = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
             get_package_share_directory("bot_controller"),
@@ -32,6 +33,7 @@ def generate_launch_description():
         ))
     )
 
+    # Joystick teleop
     joystick = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(
             get_package_share_directory("bot_controller"),
@@ -41,6 +43,9 @@ def generate_launch_description():
         launch_arguments={"use_sim_time": "True"}.items()
     )
 
+    # -----------------------------
+    # Task 1 – Path Smoothing
+    # -----------------------------
     path_smoother_node = Node(
         package="path_smoother",
         executable="path_smoother_node",
@@ -48,6 +53,9 @@ def generate_launch_description():
         parameters=[params_file]
     )
 
+    # -----------------------------
+    # Task 2 – Trajectory Generation
+    # -----------------------------
     trajectory_generator_node = Node(
         package="trajectory_generator",
         executable="trajectory_generator_node",
@@ -55,6 +63,9 @@ def generate_launch_description():
         parameters=[params_file]
     )
 
+    # -----------------------------
+    # Task 3 – Trajectory Tracking Controller
+    # -----------------------------
     traj_controller_node = Node(
         package="trajectory_tracking_controller",
         executable="traj_controller",
@@ -62,6 +73,9 @@ def generate_launch_description():
         parameters=[params_file]
     )
 
+    # -----------------------------
+    # (Extra) Obstacle Avoidance Module
+    # -----------------------------
     obstacle_avoidance_node = Node(
         package="obstacle_avoidance",
         executable="obstacle_avoidance_node",
@@ -69,6 +83,7 @@ def generate_launch_description():
         parameters=[params_file]
     )
 
+    # Visualization
     rviz = Node(
         package="rviz2",
         executable="rviz2",
@@ -85,9 +100,9 @@ def generate_launch_description():
         gazebo,
         controller,
         joystick,
-        path_smoother_node,
-        trajectory_generator_node,
-        traj_controller_node,
-        obstacle_avoidance_node,
+        path_smoother_node,         # Task 1
+        trajectory_generator_node,  # Task 2
+        traj_controller_node,       # Task 3
+        obstacle_avoidance_node,    # Extra
         rviz
     ])
