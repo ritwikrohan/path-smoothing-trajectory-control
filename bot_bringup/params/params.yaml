@@ -1,0 +1,55 @@
+path_smoother:
+  ros__parameters:
+    frame_id: "odom"      # Coordinate frame for the path (usually odom/map)
+    w_data: 0.7           # Weight for staying close to original waypoints 
+                          # increase = robot follows waypoints more strictly, path less smooth
+                          # decrease = smoother curves, but may drift away from waypoints
+    w_smooth: 0.3         # Weight for smoothness of path 
+                          # increase = path becomes smoother, may cut corners
+                          # decrease = path follows waypoints more exactly, less smooth
+    tolerance: 1.0e-6     # Convergence threshold for smoothing loop 
+                          # increase = faster finish but less accurate
+                          # decrease = more precise smoothing but slower
+    max_its: 1000         # Maximum iterations allowed for smoothing
+                          # increase = allows more refinement of path
+                          # decrease = stops earlier, may leave path rough
+
+trajectory_generator:
+  ros__parameters:
+    velocity: 0.2         # Constant velocity (m/s) used for timing trajectory
+                          # increase = robot moves faster along trajectory
+                          # decrease = robot moves slower
+
+traj_controller:
+  ros__parameters:
+    kp: 2.0               # Proportional gain for PD controller
+                          # increase = faster correction, but can oscillate
+                          # decrease = slower correction, more stable but sluggish
+    kd: 0.1               # Derivative gain for PD controller
+                          # increase = more damping, smoother but slower response
+                          # decrease = less damping, faster but may overshoot/oscillate
+    max_linear_velocity: 0.3    # Maximum forward velocity allowed
+                                # increase = robot can go faster in straight lines
+                                # decrease = caps speed lower, robot moves slower
+    max_angular_velocity: 1.0   # Maximum turning speed allowed
+                                # increase = robot turns faster
+                                # decrease = robot turns slower, more stable but less agile
+
+obstacle_avoidance:
+  ros__parameters:
+    obstacle_distance: 0.6      # Distance (m) at which avoidance is triggered
+                                # increase = avoids obstacles earlier, safer but conservative
+                                # decrease = gets closer before avoiding, riskier
+    sector_width_deg: 30.0      # Angular width (degrees) of obstacle detection
+                                # increase = wider detection, more sensitive to surroundings
+                                # decrease = narrower detection, may miss side obstacles
+    side_offset: 1.5            # Lateral offset (m) when rerouting around obstacle
+                                # increase = bigger sidestep, safer clearance but longer detour
+                                # decrease = smaller sidestep, tighter clearance but riskier
+    forward_offset: 0.5         # Forward distance (m) for planning avoidance
+                                # increase = longer lookahead, smoother path around obstacles
+                                # decrease = shorter lookahead, quicker but may zig-zag
+    dynamic_side: true          # If true, robot picks freer side (left/right) automatically
+                                # if false, robot always picks fixed side
+    global_frame: "odom"        # Planning reference frame (odom = relative, map = global)
+    base_frame: "base_footprint" # Robot’s base link frame for TF lookups

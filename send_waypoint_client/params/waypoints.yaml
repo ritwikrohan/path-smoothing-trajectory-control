@@ -1,0 +1,33 @@
+# Instructions:
+# This parameter takes waypoints as a flat list of doubles [x1, y1, x2, y2, ...].
+# Each point must be entered as an (x, y) pair in the same line for clarity.
+# To add more waypoints, just append more pairs on new lines.
+
+
+waypoints_client:
+  ros__parameters:
+
+    # === Case 1: Semi Circle Curved path (No Obstacle) ===
+
+    waypoints_case1: [0.0, 0.0,
+                      0.195, 0.382,
+                      0.383, 0.707,
+                      0.617, 0.924,
+                      0.866, 1.0,
+                      1.134, 0.924,
+                      1.383, 0.707,
+                      1.618, 0.382,
+                      1.805, 0.195,
+                      2.0, 0.0]
+
+    # === Case 2: longer path (With Obstacle) ===
+
+    waypoints_case2: [0.0, 0.0,
+                      5.0, 0.0,
+                      6.0, 0.0]
+
+    # === Case 3: Emergency Stop test (When goal is inside the obstacle)  ===
+
+    waypoints_case3: [0.0, 0.0,
+                      2.0, 0.0]
+
